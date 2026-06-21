@@ -7,10 +7,10 @@ El objetivo fue diseñar, construir y programar un sistema de control capaz de m
 
 
 ## Componentes principales
-* [cite_start]**Controlador**: Arduino Uno[cite: 58].
-* [cite_start]**Actuador**: Carrito con 4 motores y puente H L298N[cite: 59, 128].
-* [cite_start]**Software**: MATLAB y Simulink para el diseño del control y la planta[cite: 60, 71].
-* [cite_start]**Sensor**: Potenciómetro de 50kΩ[cite: 63, 140].
+**Controlador**: Arduino Uno.
+**Actuador**: Carrito con 4 motores y puente H L298N.
+**Software**: MATLAB y Simulink para el diseño del control y la planta.
+**Sensor**: Potenciómetro de 50kΩ.
 
 ## Resultados
 Se logró establecer un *set point* y observar el comportamiento de la planta mediante la interfaz de Simulink, superando los desafíos de inestabilidad y comunicación entre hardware y software[cite: 238, 248].
