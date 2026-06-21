@@ -1,0 +1,50 @@
+function [EN_L_PWM, IN1_L, IN2_L, EN_R_PWM, IN1_R, IN2_R] =
+motor_logic(raw_output, error_in)
+% motor_logic: Implementa la lógica de control de Avance/Retroceso (SIN GIRO).
+% Usa la salida PID (raw_output) para controlar los 4 motores SIMULTÁNEAMENTE.
+%
+% ASUMIENDO:
+% 1. Avance = raw_output > 0
+% 2. Retroceso = raw_output < 0
+% --- 1. Parámetros de Control ---
+UMBRAL_ERROR = 5; % Umbral de Zona Muerta (error max para detenerse)
+MAX_PWM = 255; % Límite superior del PWM
+% --- 2. Inicialización de Salidas (Seguridad) ---
+EN_L_PWM = 0;
+IN1_L = 0;
+IN2_L = 0;
+EN_R_PWM = 0;
+IN1_R = 0;
+IN2_R = 0;
+% --- 3. Lógica de Zona Muerta (Paro) ---
+if abs(error_in) <= UMBRAL_ERROR
+% Detenido. Todos los pines IN y PWM en 0.
+else
+% --- 4. Cálculo del PWM (Velocidad) ---
+% La velocidad es la magnitud absoluta de la salida PID.
+PWM_VAL = abs(raw_output);
+% Limitar el PWM.
+PWM_VAL = min(MAX_PWM, PWM_VAL);
+% Ambos lados reciben la misma velocidad.
+EN_L_PWM = PWM_VAL;
+EN_R_PWM = PWM_VAL;
+% --- 5. Definición de la Dirección (Avance o Retroceso) ---
+if raw_output > 0
+% El error genera una salida POSITIVA -> AVANCE
+% Dirección ADELANTE (Asumiendo IN1=HIGH, IN2=LOW para Avance)
+% Ambos lados se configuran para ADELANTE
+IN1_L = 1; % HIGH
+IN2_L = 0; % LOW
+IN1_R = 1; % HIGH
+IN2_R = 0; % LOW
+else % raw_output < 0
+% El error genera una salida NEGATIVA -> RETROCESO
+% Dirección RETROCESO (Asumiendo IN1=LOW, IN2=HIGH para Retroceso)
+% Ambos lados se configuran para RETROCESO
+IN1_L = 0; % LOW
+IN2_L = 1; % HIGH
+IN1_R = 0; % LOW
+IN2_R = 1; % HIGH
+end
+end
+end
